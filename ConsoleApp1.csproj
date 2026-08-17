@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.cs" />
+    <Compile Include="Programm.cs" />
     <Compile Include="Class2.cs" />
     <Compile Include="Class3.cs" />
     <Compile Include="Class4.cs" />
@@ -52,9 +53,6 @@
     <Compile Include="Class7.cs" />
     <Compile Include="Class8.cs" />
     <Compile Include="Class9.cs" />
-    <Compile Include="..\..\..\..\Downloads\Program.cs">
-      <Link>Program.cs</Link>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
