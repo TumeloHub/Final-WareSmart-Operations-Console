@@ -10,10 +10,8 @@ namespace ConsoleApp1
     {
             static void Main(string[] args)
             {
-                // ==========================================
-                // CREATE WAREHOUSE
-                // ==========================================
-
+               
+/*
                 Warehouse warehouse = new Warehouse("WareSmart");
 
 
@@ -886,7 +884,7 @@ namespace ConsoleApp1
             }
         
 
-    }
+    }*/
 
 
 }
