@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,14 +17,12 @@ namespace ConsoleApp1
 
         public void AddProduct(Product product)
         {
-            if (product == null)
-                throw new ArgumentNullException(nameof(product));
+            WarehouseValidator.ValidateProduct(product);
 
-            if (products.Any(p => p.ProductID == product.ProductID))
-                throw new ArgumentException(
-                    "A product with this ID already exists.");
+            if (products.Any(p => p.ProductID == product.ProductID)) throw new ArgumentException("A product with this ID already exists.");
 
             products.Add(product);
+            WarehouseLogger.Log("Product added: " + product.ProductName);
         }
 
         public bool RemoveProduct(int productID)

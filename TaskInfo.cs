@@ -12,10 +12,10 @@ namespace ConsoleApp1
         public string Action { get; }
         public DateTime Time { get; }
 
-        public TaskInfo(WarehouseTask task, string action)
+        public TaskInfo(WarehouseTask _task, string _action)
         {
-            Task = task;
-            Action = action;
+            Task = _task;
+            Action = _action;
             Time = DateTime.Now;
         }
     }

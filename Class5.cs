@@ -15,8 +15,8 @@ namespace ConsoleApp1
         private const double WeightResourceScarcity = 0.20;
         private const double WeightOrderAge = 0.15;
 
-        public ReceivingTask(int taskID, int workload, int orderAge, int resourceScarcity, int operationalRisk)
-            : base(taskID, workload, orderAge, resourceScarcity, operationalRisk)
+        public ReceivingTask(int _taskID, int _workload, int _orderAge, int _resourceScarcity, int _operationalRisk)
+            : base(_taskID, _workload, _orderAge, _resourceScarcity, _operationalRisk)
         {
         }
 

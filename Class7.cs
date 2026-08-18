@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,7 +17,7 @@ namespace ConsoleApp1
     // Abstract base = every warehouse task shares an identity and four rating
     // factors, but HOW those factors turn into a priority score is left to
     // each derived class (see CalculatePriority in Picking/Receiving/Restocking).
-    public abstract class WarehouseTask
+    public abstract class WarehouseTask : IPrioritizable
     {
         public int TaskID { get; private set; }
 

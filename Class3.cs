@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -7,7 +7,7 @@ using System;
 namespace ConsoleApp1
 {
 
-    public class Product
+    public class Product : IStockTrackable
     {
         public int ProductID { get; private set; }
         public string ProductName { get; private set; }
@@ -16,32 +16,26 @@ namespace ConsoleApp1
         public int Quantity { get; private set; }
         public int ReorderLevel { get; private set; }
 
-        public Product(
-            int productID,
-            string productName,
-            string category,
-            double weight,
-            int quantity,
-            int reorderLevel)
+        public Product(int _productID, string _productName, string _category, double _weight, int _quantity, int _reorderLevel)
         {
-            if (string.IsNullOrWhiteSpace(productName))
+            if (string.IsNullOrWhiteSpace(_productName))
                 throw new ArgumentException("Product name cannot be empty.");
 
-            if (weight <= 0)
+            if (_weight <= 0)
                 throw new ArgumentException("Weight must be greater than zero.");
 
-            if (quantity < 0)
+            if (_quantity < 0)
                 throw new ArgumentException("Quantity cannot be negative.");
 
-            if (reorderLevel < 0)
+            if (_reorderLevel < 0)
                 throw new ArgumentException("Reorder level cannot be negative.");
 
-            ProductID = productID;
-            ProductName = productName;
-            Category = category;
-            Weight = weight;
-            Quantity = quantity;
-            ReorderLevel = reorderLevel;
+            ProductID = _productID;
+            ProductName = _productName;
+            Category = _category;
+            Weight = _weight;
+            Quantity = _quantity;
+            ReorderLevel = _reorderLevel;
         }
         public void AddStock(int amount)
         {
@@ -53,13 +47,16 @@ namespace ConsoleApp1
 
         public bool RemoveStock(int amount)
         {
-            if (amount <= 0)
-                throw new ArgumentException("Amount must be greater than zero.");
+            if (amount <= 0) throw new ArgumentException("Amount must be greater than zero.");
 
             if (amount > Quantity)
-                return false;
+            {
+                WarehouseLogger.Log("Insufficient stock for product " + ProductName);
+                throw new InsufficientStockException("Cannot remove " + amount + " units from " + ProductName + ". Only " + Quantity + " units are available.");
+            }
 
             Quantity -= amount;
+            WarehouseLogger.Log(amount + " units removed from " + ProductName);
             return true;
         }
 

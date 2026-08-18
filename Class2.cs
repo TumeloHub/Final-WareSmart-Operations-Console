@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,10 +21,7 @@ namespace ConsoleApp1
 
             public WarehouseOrder(int orderID, string customerName)
             {
-                if (string.IsNullOrWhiteSpace(customerName))
-                    throw new ArgumentException(
-                        "Customer name cannot be empty.",
-                        nameof(customerName));
+                if (string.IsNullOrWhiteSpace(customerName)) throw new ArgumentException("Customer name cannot be empty.", nameof(customerName));
 
                 OrderID = orderID;
                 CustomerName = customerName;
@@ -34,8 +31,8 @@ namespace ConsoleApp1
 
             public void AddProduct(Product product)
             {
-                if (product == null)
-                    throw new ArgumentNullException(nameof(product));
+                if (product == null) throw new ArgumentNullException(nameof(product));
+                if (products.Count >= 50) throw new ArgumentException("An order cannot contain more than 50 products.");
 
                 products.Add(product);
             }

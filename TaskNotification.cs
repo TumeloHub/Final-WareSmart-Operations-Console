@@ -12,10 +12,10 @@ namespace ConsoleApp1
         public string Message { get; }
         public DateTime Time { get; }
 
-        public TaskNotification(WarehouseTask task, string action)
+        public TaskNotification(WarehouseTask _task, string _action)
         {
-            Task = task;
-            Message = $"{action}: {task.GetType().Name}";
+            Task = _task;
+            Message = $"{_action}: {_task.GetType().Name}";
             Time = DateTime.Now;
         }
     }

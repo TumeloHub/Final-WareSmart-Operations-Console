@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,7 +7,8 @@ using System.Threading.Tasks;
 
 namespace ConsoleApp1
 {
-    public class MonitorService : EventArgs
+    // Runs the warehouse monitoring process on a background thread.
+    public class MonitorService
     {
         public event Action<object, TaskInfo> OnTaskCreated;
         public event Action<object, TaskInfo> OnTaskRemoved;
@@ -15,7 +16,7 @@ namespace ConsoleApp1
         public event Action<object, string> OnAlert;
 
         private Warehouse warehouse;
-        private bool isRunning = false;
+        private volatile bool isRunning = false;
         private Thread monitorThread;
         private Dictionary<int, int> lastStock = new Dictionary<int, int>();
 
@@ -27,6 +28,13 @@ namespace ConsoleApp1
         public void Start()
         {
             if (isRunning) return;
+
+            lastStock.Clear();
+            foreach (Product product in warehouse.Inventory.GetAllProducts())
+            {
+                lastStock[product.ProductID] = product.Quantity;
+            }
+
             isRunning = true;
             monitorThread = new Thread(MonitorLoop);
             monitorThread.IsBackground = true;
@@ -51,7 +59,7 @@ namespace ConsoleApp1
 
         private void CheckStockLevels()
         {
-            foreach (var product in warehouse.Inventory.GetAllProducts())
+            foreach (Product product in warehouse.Inventory.GetAllProducts())
             {
                 int currentStock = product.Quantity;
 
@@ -85,16 +93,12 @@ namespace ConsoleApp1
         {
             OnTaskCreated?.Invoke(this, new TaskInfo(task, "Created"));
 
-            if (task.GetPriorityLevel() == PriorityLevel.Critical)
-            {
-                OnAlert?.Invoke(this, $"CRITICAL TASK: {task.GetType().Name} #{task.TaskID}");
-            }
+            if (task.GetPriorityLevel() == PriorityLevel.Critical) OnAlert?.Invoke(this, $"CRITICAL TASK: {task.GetType().Name} #{task.TaskID}");
         }
+
         public void RaiseTaskRemoved(WarehouseTask task)
         {
             OnTaskRemoved?.Invoke(this, new TaskInfo(task, "Removed"));
         }
     }
 }
-    
-

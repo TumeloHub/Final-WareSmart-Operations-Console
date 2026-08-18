@@ -12,10 +12,10 @@ namespace ConsoleApp1
         public string ChangeType { get; } // Created, Removed, etc.
         public DateTime Time { get; }
 
-        public TaskChange(WarehouseTask task, string changeType)
+        public TaskChange(WarehouseTask _task, string _changeType)
         {
-            Task = task;
-            ChangeType = changeType;
+            Task = _task;
+            ChangeType = _changeType;
             Time = DateTime.Now;
         }
     }
